@@ -11,7 +11,7 @@
                 
 
                 <div class="form-example">
-                  <input type="submit" value="Subscribe!">
+                  <input  type="submit" value="Subscribe!">
                 </div>
               </form>
 </template>
@@ -31,24 +31,22 @@ export default {
   },
   methods: {
     submit: function(){
-      console.log(this.postTitle);
       axios.post('http://localhost:3000/post', {
         title: this.postTitle,
         text: this.postText,
 
       })
           .then((res) => {
-        if(typeof res.data.message !== 'undefined' && res.data.message === 'Objet enregistré !'){
-// on est content
+        if(typeof res.data.message !== 'undefined' && res.data.message === 'Post enregistré !'){
+// on est content 
         }else{
-          alert('error');
-        }
-    })
+          alert('error');}
+      })
         .catch((err) => {
-        console.log(err);
-    })
+        console.log(err);})
+        },
+        
   }
-}
 }
 </script>
 

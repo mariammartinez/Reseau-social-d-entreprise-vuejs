@@ -1,5 +1,5 @@
 <template>
-     <form action="" method="get" class="form-example">
+     <form action=@submit.prevent="login" action="/user/login"  method="post" class="form-example">
                 <div class="form-example">
                   <label for="email">email</label>
                   <input type="email" name="email" id="email" required>
@@ -17,21 +17,36 @@
 <script>
 //const axios = require('axios');
 export default {
-  name: 'LoginForm',
+name: 'LoginForm' ,
   data: function() {
       return {
-          posts: []
+          email:'',
+          password:''
+          
       }
   },
   props: {
 
   },
+  methods:{
+    login: function(){
+      axios.post('http://localhost:3000/user/login', {
+          email: this.email,
+          password: this.password
+
+    })
+        .then((res) => {
+          if(typeof res.data.message !== 'undefined' && res.data.message === 'utilisateur non trouvé!'){
+          // pas bon 
+          }else{
+          alert('bienvenue');}
+          //redirection a l'accueil
+    })
+      .catch((err) => {
+      console.log(err);})
+      },
+    
+  }
  
 }
 
-</script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-
-</style>

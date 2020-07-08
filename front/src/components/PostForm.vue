@@ -1,17 +1,18 @@
 <template>
     <form @submit.prevent="submit" action="/post" method="post" class="form-post">
-                <div class="form-example">
-                  <label for="text">texte</label>
-                  <input v-model="postText" type="text" name="text" id="text" required>
-                </div>
+
                 <div class="form-example">
                     <label for="title">titre</label>
                     <input v-model="postTitle" type="text" name="title" id="title" maxlength="20" required>
                 </div>
+                <div class="form-example">
+                  <label for="text">exprime-toi</label>
+                  <input v-model="postText" type="text" name="exprime-toi" id="text" required>
+                </div>
                 
 
                 <div class="form-example">
-                  <input  type="submit" value="Subscribe!">
+                  <input  type="submit" value="Publier!">
                 </div>
               </form>
 </template>

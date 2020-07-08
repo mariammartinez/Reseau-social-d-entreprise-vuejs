@@ -1,28 +1,34 @@
 <template>
   <div id="app">
-    <PostList />
-    <PostForm />
-    <SignupForm />
+    <div id="nav">
+       <SignupForm msg="Welcome to groupo"/>
+      <router-link to="/">Home</router-link> |
+      <router-link to="/Signup">Signup</router-link>|  
+      <router-link to="/Login">Login</router-link>
+    </div>
+    <router-view/>
   </div>
 </template>
 
-<script>
-//import PostList from './components/PostList'
-import PostForm from './components/PostForm'
-//import LoginForm from './components/LoginForm'
-import SignupForm from './components/SignupForm'
-export default {
-  name: 'App',
-  components: {
-    //PostList,
-    PostForm,
-    SignupForm
-    //LoginForm
+<style lang="scss">
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 
+#nav {
+  padding: 30px;
+
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
   }
 }
-</script>
-
-<style lang="scss">
-
 </style>

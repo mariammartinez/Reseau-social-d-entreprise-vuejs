@@ -1,4 +1,5 @@
 exports.createPost = (req,res,next) => {
+  
     const post = new req.model.Post({
       ...req.body
     });
@@ -31,14 +32,10 @@ exports.deletePost = (req, res, next) =>{
  
 
 exports.getAllPost = (req, res, next) => {
+   
     req.model.Post.findAll()
     .then(data => {
-        data[0].getUser()
-            .then(user => {
-                res.status(200).send({msg:'ok'})
-                console.log(user);
-            }) 
-            .catch(error => res.status(404).json({ error }));
+        res.status(200).send({posts:data})
     });
 }
 //demander a matthias

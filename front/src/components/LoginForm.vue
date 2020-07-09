@@ -1,5 +1,5 @@
 <template>
-     <form action=@submit.prevent="login" action="/user/login"  method="post" class="form-example">
+     <form @submit.prevent="login" action="/user/login"  method="post" class="form-example">
                 <div class="form-example">
                   <label for="email">email</label>
                   <input type="email" name="email" id="email" required>
@@ -9,13 +9,13 @@
                     <input type="password" name="password" id="password" minlength="8" required>
                 </div>
                 <div class="form-example">
-                  <input type="submit" value="Subscribe!">
+                  <input type="submit" value="Connexion">
                 </div>
               </form>
 </template>
 
 <script>
-//const axios = require('axios');
+const axios = require('axios');
 export default {
 name: 'LoginForm' ,
   data: function() {

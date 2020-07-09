@@ -17,7 +17,7 @@
             <input v-model="password" type="password" name="password" id="password" minlength="8" required>
         </div>
         <div class="form-example">
-            <input type="submit" value="Subscribe!">
+            <input type="submit" value="Inscription">
         </div>
     </form>
 </template>

@@ -1,7 +1,7 @@
 <template>
     <ul>
         <li v-for="post in posts" :key="post.id">
-            {{ post.title }}
+            {{ post.title }} {{ post.text }} {{post.date}}
         </li>
     </ul>
 </template>
@@ -16,6 +16,7 @@ export default {
       }
   },
   props: {
+     
 
   },
   mounted:function() {
@@ -37,5 +38,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+li{
+  list-style: none;
+}
 
 </style>

@@ -1,17 +1,21 @@
 <template>
     <form @submit.prevent="submit" action="/post" method="post" class="form-post">
 
-                <div class="form-example">
+                <div class="form-post">
                     <label for="title">titre</label>
                     <input v-model="postTitle" type="text" name="title" id="title" maxlength="20" required>
                 </div>
-                <div class="form-example">
+                <div class="form-post">
                   <label for="text">exprime-toi</label>
                   <input v-model="postText" type="text" name="exprime-toi" id="text" required>
                 </div>
+                      <div class="form-post">
+                  <label for="text">ajouter une image</label>
+                  <input v-model="postImage" type="text" name="image" id="text" required>
+                </div>
                 
 
-                <div class="form-example">
+                <div class="form-post">
                   <input  type="submit" value="Publier!">
                 </div>
               </form>
@@ -24,7 +28,8 @@ export default {
   data: function() {
     return {
       postTitle: '',
-      postText: ''
+      postText: '',
+      postImage: ''
     }
   },
   props: {
@@ -35,6 +40,7 @@ export default {
       axios.post('http://localhost:3000/post', {
         title: this.postTitle,
         text: this.postText,
+        image: this.postImage,
 
       })
           .then((res) => {

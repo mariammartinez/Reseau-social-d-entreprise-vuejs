@@ -2,19 +2,17 @@ const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
 
-    let post = sequelize.define('Post', {
+    let comment = sequelize.define('comment', {
         // Model attributes are defined here
           text: {type: DataTypes.STRING},
-          title: {type: DataTypes.STRING},
-            date:{type: DataTypes.DATE, 
+          date: {type: DataTypes.DATE, 
           defaultValue: Sequelize.NOW},
-          image: {type: DataTypes.STRING},
     }, 
       {
         timestamps: false,
-        tableName: 'post'
+        tableName: 'comment'
     });
 
 
-    return post;
+    return comment;
 };

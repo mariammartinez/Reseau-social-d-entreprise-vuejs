@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 
 exports.signup = (req, res, next) =>{
-    console.log(req.body);
+ 
  bcrypt.hash(req.body.password, 10)
  .then(hash => {
      const user = new req.model.User({
@@ -13,17 +13,17 @@ exports.signup = (req, res, next) =>{
          email: req.body.email,
          password: hash
      })
-     console.log(user);
+
      user.save()
      .then(()=> res.status(201).json({message:"Utilisateur crée!"}))
      .catch(error => {
-         console.log(error);
+
         res.status(500).json({error})   
      });
      
  })
  .catch(error => {
-     console.log(error);
+
     res.status(500).json({error});
  })
     
@@ -32,7 +32,8 @@ exports.signup = (req, res, next) =>{
 
 
 exports.login = (req, res, next) =>{
-    User.findOne({email: req.body.email})
+
+    req.model.User.findOne({where: {email: req.body.email}})
     .then(user => {
         if(!user){
             return res.status(401).json({ error:'utilisateur non trouvé' })
@@ -43,8 +44,12 @@ exports.login = (req, res, next) =>{
                     return res.status(401).json({ error:'mot de passe non trouvé' })
                 }
                 res.status(200).json({
-                    userId:user._id,
-                    token : 'TOKEN'
+                    userId:user.id,
+                    token: jwt.sign(
+                        { userId: user.id },
+                        'RANDOM_TOKEN_SECRET',
+                        { expiresIn: '24h' }
+                    )
                 });
             })
             .catch(error => res.status(500).json({error}));

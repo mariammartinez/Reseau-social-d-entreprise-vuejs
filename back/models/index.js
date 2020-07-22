@@ -5,13 +5,26 @@ const db =  new Sequelize('mysql://mariam:mariamtest@localhost:3306/groupomania'
 const Model = {
     sequelize: db,
     User: require('./user')(db, Sequelize.DataTypes),
-    Post: require('./post')(db, Sequelize.DataTypes)
+    Post: require('./post')(db, Sequelize.DataTypes),
+    Comment: require('./comment')(db, Sequelize.DataTypes)
 }
 
 Model.Post.belongsTo(Model.User, {
     foreignKey: 'userId'
 })
 Model.User.hasMany(Model.Post,{
+    foreignKey: 'userId'
+})
+Model.Comment.belongsTo(Model.Post, {
+    foreignKey: 'postId'
+})
+Model.Post.hasMany(Model.Comment,{
+    foreignKey: 'postId'
+})
+Model.Comment.belongsTo(Model.User, {
+    foreignKey: 'userId'
+})
+Model.User.hasMany(Model.Comment,{
     foreignKey: 'userId'
 })
 

@@ -1,13 +1,32 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/signup">Signup</router-link>|  
-      <router-link to="/login">Login</router-link>
+      <router-link v-if="isConnected" to="/">Home</router-link> |
+      <router-link class="signup" v-if="!isConnected" to="/signup">Inscription</router-link>|
+      <router-link  v-if="!isConnected" to="/login">connexion</router-link>
+      <a href="logout" v-if="isConnected" @click.prevent="deconnexion" to="/"
+        >déconnexion</a
+      >
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
+
+<script>
+export default {
+  data: function() {
+    return {
+      isConnected: sessionStorage.getItem("jwt") !== null,
+    };
+  },
+  methods: {
+    deconnexion: function() {
+      sessionStorage.clear();
+      window.location.href = "/login";
+    },
+  },
+};
+</script>
 
 <style lang="scss">
 #app {
@@ -16,17 +35,22 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color:#c4c4c4;;
+}
+.signup{
+  background-color: white;
 }
 
 #nav {
   padding: 30px;
+  text-align: right;
 
   a {
     font-weight: bold;
     color: #2c3e50;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #fd2d01;
     }
   }
 }

@@ -4,6 +4,7 @@ const model = require('./models/index');
 const app = express();
 const postRoutes = require('./routes/post');
 const userRoutes = require('./routes/user');
+const commentRoutes = require('./routes/comment');
 
 
 //CROSS
@@ -23,5 +24,6 @@ app.use(function (req, res, next) {
 
 app.use('/post', postRoutes);
 app.use('/user', userRoutes);
+app.use('/comment', commentRoutes);
 
 module.exports = app;

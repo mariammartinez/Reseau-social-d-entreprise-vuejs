@@ -1,20 +1,40 @@
+//convertir un objet DATE en string (dd/mm/yyyy hh/mm) 
+function converDateToStr(d){
+    let day = d.getDate();
+    let month = d.getMonth()+1;
+    let year = d.getFullYear();
+    let hour = d.getHours();
+    let minutes = d.getMinutes();
+    if(minutes < 10 ){
+        minutes = '0' + minutes        
+    }
+    if(hour < 10 ){
+        hour = '0' + hour        
+    }
+    if(month < 10 ){
+        month = '0' + month        
+    }   
+    if(day < 10 ){
+        day = '0' + day        
+    }
+    return day+'/'+month+ '/'+year+' '+hour+':'+minutes;
+}
+
 exports.createPost = (req,res,next) => {
   
     const post = new req.model.Post({
       ...req.body
     });
-    post.setUser(1)
+    post.setUser(req.userId)
     post.save()
       .then(() => res.status(201).json({ message: 'Post enregistré !'}))
       .catch(error => res.status(400).json({ error }));
 };
-
+//a enlever
 exports.modifyPost = (req, res, next) =>{
     req.model.Post.findOne({_id: req.params.id})
     .then((post) => {
-        console.log(post)
         post.title = req.body.title
-        console.log(post)
         post.save()
         .then(() => res.status(200).json({ message: 'Post modifié !'}))
         .catch(error => res.status(400).json({ error }));
@@ -22,25 +42,48 @@ exports.modifyPost = (req, res, next) =>{
 };
 
 exports.deletePost = (req, res, next) =>{
-    req.model.Post.findOne({_id: req.params.id})
-    .then((post) => {
-         post.destroy()
-        .then(() => res.status(200).json({ message: 'Post supprimé !'}))
-        .catch(error => res.status(400).json({ error }));
-    })
+    req.model.Post.findOne({where:{id: req.params.id}})
+        .then((post) => {
+            if(req.userId == post.userId){
+                post.destroy()
+                .then(() => res.status(200).json({ message: 'Post supprimé !'}))
+                .catch(error => res.status(400).json({ error }));
+            }else{
+                res.status(400).json({ message: 'error' })
+            }
+        })
 };
  
 
 exports.getAllPost = (req, res, next) => {
    
-    req.model.Post.findAll()
+    req.model.Post.findAll({
+        order:[
+            ['date', 'DESC']
+        ], include: [req.model.User]
+    })
     .then(data => {
-        res.status(200).send({posts:data})
+        let allPosts = []
+
+        for(let post of data){
+            
+            let returnPost ={
+                id: post.id,
+                date : converDateToStr(post.date),
+                title : post.title,
+                text: post.text,
+                img: post.img,
+                userName: post.User.name + ' ' +  post.User.lastName,
+                userId: post.userId
+            } 
+          allPosts.push(returnPost);
+        }
+        res.status(200).send({posts:allPosts})
     });
 }
-//demander a matthias
+//tester
 exports.getOnePost = (req, res, next) => {
-    req.model.Post.findOne({ _id: req.params.id })
-    .then(sauces => res.status(200).json(sauces))
+    req.model.Post.findOne({where: { _id: req.params.id }})
+    .then(post => res.status(200).json(post))
     .catch(error => res.status(400).json({ error }));
 }

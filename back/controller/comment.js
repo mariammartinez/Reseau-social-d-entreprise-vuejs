@@ -65,10 +65,10 @@ exports.createComment = (req,res,next) => {
         })
 };
 
-exports.getAllComment = (req, res, next) => {
-   console.log("ccc")
-    req.model.Comment.findAll({
-        where:{postId: req.body.postId},
+exports.getAllComment = (req, res, next) => {console.log("req.params.postId");
+    req.model.Comment.findAll({ 
+        //reparer le where, chercher l'id du post
+        where:{postId: req.params.id}, 
         order:[
             ['date', 'DESC']
         ], include: [req.model.User]
@@ -88,5 +88,6 @@ exports.getAllComment = (req, res, next) => {
           allComments.push(returnComment);
         }
         res.status(200).send({comments:allComments})
-    });
+    })
+    .catch(error => res.status(400).json({ error }));
 }

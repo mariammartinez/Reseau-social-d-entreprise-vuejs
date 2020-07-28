@@ -4,3 +4,7 @@
   font-family:Helvetica;
   font-weight: bold;
 }
+
+.button{
+  @include button;  
+}

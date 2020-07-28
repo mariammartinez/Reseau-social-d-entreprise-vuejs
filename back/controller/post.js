@@ -43,9 +43,15 @@ exports.modifyPost = (req, res, next) =>{
 
 exports.deletePost = (req, res, next) =>{
     req.model.Post.findOne({where:{id: req.params.id}})
-        .then((post) => {
+        .then((post) => { 
             if(req.userId == post.userId){
-                post.destroy()
+                req.model.Comment.findAll({where:{postId: req.params.id}})
+                .then((comments) => {
+                    for ( let comment of comments){
+                        comment.destroy()
+                    }
+                })
+                post.destroy() 
                 .then(() => res.status(200).json({ message: 'Post supprimé !'}))
                 .catch(error => res.status(400).json({ error }));
             }else{

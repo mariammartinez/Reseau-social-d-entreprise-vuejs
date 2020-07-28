@@ -1,23 +1,25 @@
 <template>
   <div id="commentList">
-    <div v-for="comment in comments" :key="comment.id" class="oneComment">
+      <button @click="commentShow" v-show="!displayComment" id="comment">Commentaires</button>  
+    <div v-for="comment in comments" :key="comment.id" v-show="displayComment" class="oneComment">
       <div class="userId">{{ comment.userName }}</div>
-      <div class="text">{{ comment.text }}</div>
       <div class="date">{{ comment.date }}</div>
-      <button @click.prevent="supp(comment.id)" class="delete" btype="button"> Supprimer </button>
+      <div class="text">{{ comment.text }}</div>
+      <button @click.prevent="supp(comment.id)" class="delete" btype="button">
+        Supprimer
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-
-
 export default {
   name: "commentList",
   components: {},
   data: function() {
     return {
       comments: [],
+      displayComment: false,
     };
   },
   props: {
@@ -28,17 +30,15 @@ export default {
   },
   methods: {
     refresh: function() {
-        console.log("coco");
       this.axios
-        .get("http://localhost:3000/comment/all",{
-            postId: this.postId
-        })
-        .then((res) => { console.log("lolo");
+        .get("http://localhost:3000/comment/post/" + this.postId + "/all")
+        .then((res) => {
+          console.log("lolo");
           this.comments = res.data.comments;
-        })
-        //.catch((err) => {
-         // console.log(err);
-        //});
+        });
+      //.catch((err) => {
+      // console.log(err);
+      //});
     },
     debug: function(str) {
       console.log(str);
@@ -61,31 +61,42 @@ export default {
           console.log(err);
         });
     },
+    commentShow: function() {
+    this.displayComment = true;
+    },
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-#postList {
-  display: block;
-  margin: auto;
-  width: 40%;
+
+import sassStyles from '../../public/scss/_mixin.scss'
+
+#commentList {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
 }
 
-.onePost {
-  box-shadow: -4px -1px 5px 0px rgba(209, 202, 209, 1);
+.oneComment {
   margin: 10px;
-  background-color: white;
-  padding: 10px;
 }
-.title {
-  font-size: 2rem;
-  font-weight: bold;
+.userId {
+  text-align: start;
+  font-size: 0.7rem;
+}
+.text {
+  font-size: 1rem;
+  font-weight: italic;
 }
 .date {
-  text-align: end;
-  font-size: 1rem;
+  text-align: start;
+  font-size: 0.5rem;
   color: #d4d4d4;
+}
+
+.delete{
+  include: button;
 }
 </style>

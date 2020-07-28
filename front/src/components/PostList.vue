@@ -51,7 +51,7 @@ export default {
     supp: function(postId) {
       this.axios
         .delete("http://localhost:3000/post/" + postId)
-        .then((res) => {
+        .then((res) => { 
           if (
             typeof res.data.message !== "undefined" &&
             res.data.message === "Post supprimé !"

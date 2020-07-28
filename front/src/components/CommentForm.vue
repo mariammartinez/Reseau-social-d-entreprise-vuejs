@@ -3,6 +3,7 @@
     <button @click="commentStart" v-show="!displayForm" id="comment">Commenter</button>
     <textarea v-show="displayForm" v-model="comment"> </textarea>
     <button @click.prevent="click" v-show="displayForm" id="send">Envoyer</button>
+
   </div>
 </template>
 
@@ -13,6 +14,7 @@ export default {
     return {
       comment: "",
       displayForm: false,
+
     };
   },
   props: {
@@ -45,6 +47,7 @@ export default {
     commentStart: function() {
       this.displayForm = true;
     },
+
   },
 };
 </script>

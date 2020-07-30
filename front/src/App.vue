@@ -5,7 +5,7 @@
       <router-link class="signup" v-if="!isConnected" to="/signup">Inscription</router-link>|
       <router-link  v-if="!isConnected" to="/login">connexion</router-link>
       <a href="logout" v-if="isConnected" @click.prevent="deconnexion" to="/">déconnexion</a>|
-      <router-link  v-if="isConnected" to="/delete"> Suppression de votre compte </router-link>
+      <a href="delete"  v-if="isConnected"  @click.prevent="deleteAccount"> Suppression de votre compte </a>
 
 
     </div>
@@ -25,7 +25,27 @@ export default {
       sessionStorage.clear();
       window.location.href = "/login";
     },
+
+    deleteAccount: function(){ 
+      if(window.confirm("voulez-vous supprimer votre compte?"))
+        this.axios 
+          .delete("http://localhost:3000/user/" + sessionStorage.getItem("userId"))
+            .then((res) => { 
+              if(
+                typeof res.data.message !== "undefined" &&
+                res.data.message === "user supprimé"
+              ) {
+                this.deconnexion()
+              } else {
+                alert("error");
+              } 
+            })
+            .catch((err) =>{
+              console.log(err);
+            })
+     }
   },
+
  
 
 };

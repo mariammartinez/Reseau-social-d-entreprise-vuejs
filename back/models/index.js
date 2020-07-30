@@ -13,19 +13,23 @@ Model.Post.belongsTo(Model.User, {
     foreignKey: 'userId'
 })
 Model.User.hasMany(Model.Post,{
-    foreignKey: 'userId'
+    foreignKey: 'userId',
+    onDelete: 'cascade'
 })
 Model.Comment.belongsTo(Model.Post, {
     foreignKey: 'postId'
 })
 Model.Post.hasMany(Model.Comment,{
-    foreignKey: 'postId'
+    foreignKey: 'postId',
+    onDelete: 'cascade'
 })
 Model.Comment.belongsTo(Model.User, {
     foreignKey: 'userId'
 })
 Model.User.hasMany(Model.Comment,{
-    foreignKey: 'userId'
+    foreignKey: 'userId',
+    onDelete: 'cascade'
+
 })
 
 module.exports = Model;

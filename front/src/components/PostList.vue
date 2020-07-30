@@ -1,5 +1,8 @@
 <template>
   <div id="postList">
+
+<button @click="coco">test</button>
+
     <div v-for="post in posts" :key="post.id" class="onePost">
       <button @click.prevent="supp(post.id)" v-if="isAuthor(post)" class="delete" type="button">supprimer</button>
       <div class="userId">{{ post.userName }}</div>
@@ -32,6 +35,13 @@ export default {
     this.refresh();
   },
   methods: {
+coco: function(){
+  this.posts.push(
+    {"id":99,"date":"29/07/2020 08:58","title":"ezrzerezr","text":"sdfsdfsdf","userName":"coquin","userId":99}
+  )
+},
+
+
     isAuthor: function(post) {
       return post.userId == sessionStorage.getItem("userId");
     },

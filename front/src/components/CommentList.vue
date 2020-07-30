@@ -32,7 +32,7 @@ export default {
       this.axios
         .get("http://localhost:3000/comment/post/" + this.postId + "/all")
         .then((res) => {
-          console.log("lolo");
+          
           this.comments = res.data.comments;
         });
       //.catch((err) => {
@@ -62,7 +62,7 @@ export default {
     commentShow: function() {
     this.displayComment = true;
     },
-    isMyComment: function(comment){ console.log(this.postUserId);
+    isMyComment: function(comment){ 
       return comment.userId == sessionStorage.getItem("userId") || this.postUserId == sessionStorage.getItem("userId") ;
     }
   },

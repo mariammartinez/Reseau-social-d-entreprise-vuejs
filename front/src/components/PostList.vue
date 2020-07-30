@@ -1,18 +1,40 @@
 <template>
-  <div id="postList">
+  <div> 
+    <form @submit.prevent="submit" action="/post" method="post" class="form-post">
+      <div class="form-post">
+        <h1> Exprimez-vous </h1>
+        <label for="title"></label>
+        <input v-model="postTitle" type="text" name="title" id="title" maxlength="20" placeholder="TITRE"/>
+      </div> 
+      <div class="form-post">
+        <label for="text"></label>
+        <textarea v-model="postText" type="text" name="exprime-toi" id="text" placeholder="votre texte ici" required></textarea>
+      </div>
+      <!--  <div class="form-post">
+                    <label for="img"></label>
+                    <input v-model="postImg" type="img" name="img" id="img">
+                  </div>
+            -->
+      <div class="form-post">
+        <input type="submit" value="Publier!" />
+      </div>
+    </form>
 
-<button @click="coco">test</button>
+    <div id="postList">
 
-    <div v-for="post in posts" :key="post.id" class="onePost">
-      <button @click.prevent="supp(post.id)" v-if="isAuthor(post)" class="delete" type="button">supprimer</button>
-      <div class="userId">{{ post.userName }}</div>
-      <div class="date">{{ post.date }}</div>
-      <div class="title">{{ post.title }}</div>
-      <div class="text">{{ post.text }}</div>
-      <CommentForm :postId="post.id" />
-      <CommentList :postId="post.id" :postUserId="post.userId" />
+  <button @click="coco">test</button>
+
+      <div v-for="post in posts" :key="post.id" class="onePost">
+        <button @click.prevent="supp(post.id)" v-if="isAuthor(post)" class="delete" type="button">supprimer</button>
+        <div class="userId">{{ post.userName }}</div>
+        <div class="date">{{ post.date }}</div>
+        <div class="title">{{ post.title }}</div>
+        <div class="text">{{ post.text }}</div>
+        <CommentForm :postId="post.id" />
+        <CommentList :postId="post.id" :postUserId="post.userId" />
+      </div>
     </div>
-  </div>
+  </div>  
 </template>
 
 <script>
@@ -27,6 +49,8 @@ export default {
   },
   data: function() {
     return {
+      postTitle: "",
+      postText: "",
       posts: [],
     };
   },
@@ -40,6 +64,27 @@ coco: function(){
     {"id":99,"date":"29/07/2020 08:58","title":"ezrzerezr","text":"sdfsdfsdf","userName":"coquin","userId":99}
   )
 },
+
+     submit: function() {
+      this.axios
+        .post("http://localhost:3000/post", {
+          title: this.postTitle,
+          text: this.postText,
+        })
+        .then((res) => {
+          if (
+            typeof res.data.message !== "undefined" &&
+            res.data.message === "Post enregistré !"
+          ) {
+            window.location.href = "/";
+          } else {
+            alert("error");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
 
 
     isAuthor: function(post) {
@@ -126,6 +171,11 @@ coco: function(){
     #postList{
       width: 90%;
     }
+  }
+
+  .form-post{
+    margin: 10px;
+    padding: 10px;
   }
 
 

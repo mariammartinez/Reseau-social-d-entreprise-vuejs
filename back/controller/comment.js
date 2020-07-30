@@ -52,12 +52,16 @@ exports.createComment = (req,res,next) => {
         .catch(error => res.status(400).json({ error }));
   };
 
-  exports.deleteComment = (req, res, next) =>{
-    req.model.Comment.findOne({where:{id: req.params.id}})
+  exports.deleteComment = (req, res, next) =>{ console.log('coco');
+      
+    req.model.Comment.findOne({
+        where:{id: req.params.id},
+        include: req.model.Post
+    })
         .then((comment) => {
-            if(req.postId == comment.postId){
+            if(comment.userId == req.userId || comment.Post.userId == req.userId){ 
                 comment.destroy()
-                .then(() => res.status(200).json({ message: 'commentaire supprimé !'}))
+                .then(() => res.status(200).json({ message: ' ok '}))
                 .catch(error => res.status(400).json({ error }));
             }else{
                 res.status(400).json({ message: 'error' })

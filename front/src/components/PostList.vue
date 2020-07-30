@@ -73,42 +73,50 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
  @import '../../public/scss/_mixins.scss';
-#postList {
-  display: block;
-  margin: auto;
-  width: 40%;
-}
+  #postList {
+    display: block;
+    margin: auto;
+    width: 40%;
+  }
 
-.onePost {
-  box-shadow: -4px -1px 5px 0px rgba(209, 202, 209, 1);
-  margin: 10px;
-  background-color: white;
-  padding: 10px;
- 
-}
-.title {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-.text{
-  font-size: 1.5rem;
-}
-.date {
-  text-align: start;
-  font-size: 0.8rem;
-  color: #d4d4d4;
-}
-.userId {
-  text-align: start;
-}
+  .onePost {
+    box-shadow: -4px -1px 5px 0px rgba(209, 202, 209, 1);
+    margin: 10px;
+    background-color: white;
+    padding: 10px;
+  
+  }
+  .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  .text{
+    font-size: 1.5rem;
+  }
+  .date {
+    text-align: start;
+    font-size: 0.8rem;
+    color: #d4d4d4;
+  }
+  .userId {
+    text-align: start;
+  }
 
-.delete{
- 
-@include button-supp;
-}
+  .delete{
+  
+  @include button-supp;
+  }
 
-.delete:hover{
-  font-weight: bold;
-}
+  .delete:hover{
+    font-weight: bold;
+  }
+
+   @media screen and (max-width: 800px){
+
+    #postList{
+      width: 90%;
+    }
+  }
+
 
 </style>

@@ -11,12 +11,10 @@
 // @ is an alias to /src
 import Delete from "@/components/Delete.vue";
 
-
-
 export default {
   name: "Delete",
   components: {
-    Delete;
+    Delete,
   },
 };
 </script>

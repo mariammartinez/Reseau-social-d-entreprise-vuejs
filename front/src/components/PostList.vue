@@ -7,7 +7,7 @@
       <div class="title">{{ post.title }}</div>
       <div class="text">{{ post.text }}</div>
       <CommentForm :postId="post.id" />
-      <CommentList :postId="post.id" />
+      <CommentList :postId="post.id" :postUserId="post.userId" />
     </div>
   </div>
 </template>
@@ -72,6 +72,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+ @import '../../public/scss/_mixins.scss';
 #postList {
   display: block;
   margin: auto;
@@ -102,11 +103,8 @@ export default {
 }
 
 .delete{
-  float: right;
-  border-radius: 5px;
-  font-family: Helvetica;
-  padding: 3px;
-  cursor: pointer;
+ 
+@include button-supp;
 }
 
 .delete:hover{

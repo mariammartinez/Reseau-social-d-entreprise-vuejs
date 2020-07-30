@@ -1,13 +1,11 @@
 <template>
   <div id="commentList">
-      <button @click="commentShow" v-show="!displayComment" id="comment">Commentaires</button>  
+    <button @click="commentShow" v-show="!displayComment" id="comment">Commentaires</button>  
     <div v-for="comment in comments" :key="comment.id" v-show="displayComment" class="oneComment">
       <div class="userId">{{ comment.userName }}</div>
       <div class="date">{{ comment.date }}</div>
       <div class="text">{{ comment.text }}</div>
-      <button @click.prevent="supp(comment.id)" class="delete" btype="button">
-        Supprimer
-      </button>
+      <button @click.prevent="supp(comment.id)" class="delete" v-if="isMyComment(comment)" btype="button">Supprimer</button>
     </div>
   </div>
 </template>
@@ -24,6 +22,7 @@ export default {
   },
   props: {
     postId: Number,
+    postUserId: Number,
   },
   mounted: function() {
     this.refresh();
@@ -49,10 +48,9 @@ export default {
         .then((res) => {
           if (
             typeof res.data.message !== "undefined" &&
-            res.data.message === "comment supprimé !"
+            res.data.message === " ok "
           ) {
             window.location.href = "/";
-            alert("ok");
           } else {
             alert("error");
           }
@@ -64,6 +62,9 @@ export default {
     commentShow: function() {
     this.displayComment = true;
     },
+    isMyComment: function(comment){ console.log(this.postUserId);
+      return comment.userId == sessionStorage.getItem("userId") || this.postUserId == sessionStorage.getItem("userId") ;
+    }
   },
 };
 </script>
@@ -71,32 +72,40 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 
-//import sassStyles from '../../public/scss/_mixin.scss'
+  @import  '../../public/scss/_mixins.scss';
 
-#commentList {
-  display: flex;
-  flex-direction: column;
-  width: 70%;
-}
+  #commentList {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+  }
 
-.oneComment {
-  margin: 10px;
-}
-.userId {
-  text-align: start;
-  font-size: 0.7rem;
-}
-.text {
-  font-size: 1rem;
-  font-weight: italic;
-}
-.date {
-  text-align: start;
-  font-size: 0.5rem;
-  color: #d4d4d4;
-}
+  .oneComment {
+    margin: 10px;
+    justify-content : space-around;
+    width:50%;
+  }
+  .userId {
+    text-align: start;
+    font-size: 0.7rem;
+  }
+  .text {
+    font-size: 1rem;
+    font-weight: italic;
+  }
+  .date {
+    text-align: start;
+    font-size: 0.5rem;
+    color: #d4d4d4;
+  }
 
-.delete{
-  include: button;
-}
+  .delete{
+    @include  button-supp;
+  }
+
+  #comment{
+    @include button-comment;
+    
+
+  }
 </style>

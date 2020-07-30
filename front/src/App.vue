@@ -4,9 +4,10 @@
       <router-link v-if="isConnected" to="/">Home</router-link> |
       <router-link class="signup" v-if="!isConnected" to="/signup">Inscription</router-link>|
       <router-link  v-if="!isConnected" to="/login">connexion</router-link>
-      <a href="logout" v-if="isConnected" @click.prevent="deconnexion" to="/"
-        >déconnexion</a
-      >
+      <a href="logout" v-if="isConnected" @click.prevent="deconnexion" to="/">déconnexion</a>
+      <router-link class="delete" v-if="isConnected" to="/delete"> Suppression de votre compte </router-link>
+
+
     </div>
     <router-view />
   </div>
@@ -25,6 +26,8 @@ export default {
       window.location.href = "/login";
     },
   },
+ 
+
 };
 </script>
 

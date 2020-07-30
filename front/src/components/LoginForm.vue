@@ -56,15 +56,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+  @import  '../../public/scss/_mixins.scss';
   .form {
     margin:10px;  
   }
 
   .button {
-    border-radius: 10px;
-    color: #fd2d01;
-    font-family:Helvetica;
-    font-weight: bold;
+    @include button-connect;
+
   }
+
 
 </style>

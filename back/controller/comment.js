@@ -48,12 +48,22 @@ exports.createComment = (req,res,next) => {
       });
       comment.userId = req.userId
       comment.save()
-        .then(() => res.status(201).json({ message: 'commentaire enregistré!'}))
+        .then(() => {
+            res.status(201).json({
+                message: 'commentaire enregistré!',
+                comment: {
+                    id: comment.id,
+                    date : converDateToStr(comment.date),
+                    text: comment.text,
+                    userName: req.user.name + ' ' +  req.user.lastName,
+                    userId: req.userId
+                }
+            })
+        })
         .catch(error => res.status(400).json({ error }));
   };
 
-  exports.deleteComment = (req, res, next) =>{ console.log('coco');
-      
+  exports.deleteComment = (req, res, next) =>{ 
     req.model.Comment.findOne({
         where:{id: req.params.id},
         include: req.model.Post

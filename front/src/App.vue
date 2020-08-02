@@ -2,14 +2,17 @@
   <div id="app">
     <div id="nav">
       <router-link v-if="isConnected" to="/">Home</router-link> |
-      <router-link class="signup" v-if="!isConnected" to="/signup">Inscription</router-link>|
+      <router-link class="signup" v-if="!isConnected" to="/signup">Inscription</router-link> |
       <router-link  v-if="!isConnected" to="/login">connexion</router-link>
-      <a href="logout" v-if="isConnected" @click.prevent="deconnexion" to="/">déconnexion</a>|
-      <a href="delete"  v-if="isConnected"  @click.prevent="deleteAccount"> Suppression de votre compte </a>
-
-
+      <a href="logout" v-if="isConnected" @click.prevent="deconnexion" to="/">déconnexion</a> |
+    
     </div>
     <router-view />
+
+    <footer>
+      <a href="delete"  v-if="isConnected"  @click.prevent="deleteAccount"> Suppression de votre compte </a>
+      <a href="utilisation" > Mentions Legales </a>
+    </footer>
   </div>
 </template>
 

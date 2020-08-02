@@ -27,8 +27,24 @@ exports.createPost = (req,res,next) => {
     });
     post.setUser(req.userId)
     post.save()
-      .then(() => res.status(201).json({ message: 'Post enregistré !'}))
-      .catch(error => res.status(400).json({ error }));
+    .then(() => { 
+        res.status(201).json({
+            message: 'Post enregistré !',
+            post: {
+                id: post.id,
+                date : converDateToStr(post.date),
+                title : post.title,
+                text: post.text,
+                img: post.img,
+                userName: req.user.name + ' ' +  req.user.lastName,
+                userId: req.userId
+            }
+        })
+    })
+    .catch(error => {
+        console.log(error);
+        res.status(400).json({ error })
+    });
 };
 //a enlever
 exports.modifyPost = (req, res, next) =>{

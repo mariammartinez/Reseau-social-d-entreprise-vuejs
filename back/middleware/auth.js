@@ -9,7 +9,16 @@ module.exports = (req, res, next) => {
     if (req.body.userId && req.body.userId !== userId) {
       throw 'Invalid user ID';
     } else {
-      next();
+        req.model.User.findOne({where:{id: req.userId}})
+        .then((user) => {
+          req.user = user
+          next();
+        })
+        .catch(error => {
+          console.log(error);
+          res.status(400).json({ error })
+        });
+
     }
   } catch {
     res.status(401).json({

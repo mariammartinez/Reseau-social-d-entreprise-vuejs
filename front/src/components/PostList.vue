@@ -19,18 +19,13 @@
         <input type="submit" value="Publier!" />
       </div>
     </form>
-
     <div id="postList">
-
-  <button @click="coco">test</button>
-
       <div v-for="post in posts" :key="post.id" class="onePost">
         <button @click.prevent="supp(post.id)" v-if="isAuthor(post)" class="delete" type="button">supprimer</button>
         <div class="userId">{{ post.userName }}</div>
         <div class="date">{{ post.date }}</div>
         <div class="title">{{ post.title }}</div>
         <div class="text">{{ post.text }}</div>
-        <CommentForm :postId="post.id" />
         <CommentList :postId="post.id" :postUserId="post.userId" />
       </div>
     </div>
@@ -38,13 +33,11 @@
 </template>
 
 <script>
-import CommentForm from "@/components/CommentForm.vue";
 import CommentList  from "@/components/CommentList.vue";
 
 export default {
   name: "PostList",
   components: {
-    CommentForm,
     CommentList,
   },
   data: function() {
@@ -58,35 +51,30 @@ export default {
   mounted: function() {
     this.refresh();
   },
-  methods: {
-coco: function(){
-  this.posts.push(
-    {"id":99,"date":"29/07/2020 08:58","title":"ezrzerezr","text":"sdfsdfsdf","userName":"coquin","userId":99}
-  )
-},
+  methods:  {
 
-     submit: function() {
-      this.axios
-        .post("http://localhost:3000/post", {
-          title: this.postTitle,
-          text: this.postText,
-        })
-        .then((res) => {
-          if (
-            typeof res.data.message !== "undefined" &&
-            res.data.message === "Post enregistré !"
-          ) {
-            window.location.href = "/";
-          } else {
-            alert("error");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    submit: function() {
+    this.axios
+      .post("http://localhost:3000/post", {
+        title: this.postTitle,
+        text: this.postText,
+      })
+      .then((res) => {
+        if (
+          typeof res.data.message !== "undefined" &&
+          res.data.message === "Post enregistré !"
+        ) { 
+          this.posts.unshift(res.data.post)
+        }
+
+         else {
+          alert("error");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     },
-
-
     isAuthor: function(post) {
       return post.userId == sessionStorage.getItem("userId");
     },
@@ -100,9 +88,7 @@ coco: function(){
           console.log(err);
         });
     },
-    debug: function(str) {
-      console.log(str);
-    },
+
     supp: function(postId) {
       this.axios
         .delete("http://localhost:3000/post/" + postId)
@@ -111,8 +97,13 @@ coco: function(){
             typeof res.data.message !== "undefined" &&
             res.data.message === "Post supprimé !"
           ) {
-            window.location.href = "/";
-              alert("ok");
+            let n = 0;
+
+// trouve position du post supprimé
+          for(let post of this.posts){
+            if (postId == post.id)
+            this.posts.splice(n, 1);
+         } 
           } else {
               alert("error");
           }

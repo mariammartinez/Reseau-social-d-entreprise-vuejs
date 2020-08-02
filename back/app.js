@@ -5,7 +5,7 @@ const app = express();
 const postRoutes = require('./routes/post');
 const userRoutes = require('./routes/user');
 const commentRoutes = require('./routes/comment');
-
+const path = require('path'); 
 
 //CROSS
 app.use((req, res, next) => {
@@ -25,5 +25,7 @@ app.use(function (req, res, next) {
 app.use('/post', postRoutes);
 app.use('/user', userRoutes);
 app.use('/comment', commentRoutes);
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;

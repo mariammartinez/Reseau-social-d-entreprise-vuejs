@@ -6,12 +6,12 @@
       <button @click.prevent="click" v-show="displayForm" id="send">Envoyer</button>
     </div>
     <div id="commentList">
-      <button @click="commentShow" v-show="!displayComment" id="comment">Commentaires</button>  
+      <button @click="commentShow" v-show="!displayComment" id="comment">Commentaires {{ this.comments.length }}</button>  
       <div v-for="comment in comments" :key="comment.id" v-show="displayComment" class="oneComment">
         <div class="userId">{{ comment.userName }}</div>
         <div class="date">{{ comment.date }}</div>
         <div class="text">{{ comment.text }}</div>
-        <button @click.prevent="supp(comment.id)" class="delete" v-if="isMyComment(comment)" btype="button">Supprimer</button>
+        <button @click.prevent="supp(comment.id)" class="delete" v-if="isMyComment(comment)" btype="button"><i class="fas fa-trash-alt"></i></button>
       </div>
     </div>
 
@@ -114,7 +114,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 
-  @import  '../../public/scss/_mixins.scss';
+  @import  '../assets/scss/_mixins.scss';
 
   #commentList {
     display: flex;
@@ -127,19 +127,21 @@ export default {
     margin: 10px;
     justify-content : space-around;
     width:50%;
+    border-radius: 10px;
+    //background-color: cornsilk;
+    padding: 10px;
   }
   .userId {
     text-align: start;
-    font-size: 0.7rem;
-  }
+    font-size: 1rem; }
   .text {
     font-size: 1rem;
     font-weight: italic;
   }
   .date {
     text-align: start;
-    font-size: 0.5rem;
-    color: #d4d4d4;
+    font-size: 0.8rem;
+    color: grey;
   }
 
   .delete{
@@ -157,10 +159,11 @@ export default {
     padding: 3px;
     color: #7575a3;
     cursor: pointer;
+    font-weight: bold;
   }
 
   #commentPost:hover{
-        color: black;
+        color: #fd2d01;
         font-weight: bold;
       }
 

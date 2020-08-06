@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
         // Model attributes are defined here
           text: {type: DataTypes.STRING},
           title: {type: DataTypes.STRING},
-            date:{type: DataTypes.DATE, 
+          date:{type: DataTypes.DATE, 
           defaultValue: Sequelize.NOW},
           image: {type: DataTypes.STRING},
     }, 

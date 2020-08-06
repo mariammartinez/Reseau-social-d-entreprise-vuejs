@@ -1,6 +1,8 @@
+$color-groupo: #fd2d01;
+
 @mixin button-connect{
     border-radius: 10px;
-  color: #fd2d01;
+  color: $color-groupo;
   font-family:Helvetica;
   font-weight: bold;
   cursor: pointer;
@@ -8,17 +10,25 @@
 
 @mixin button-supp {
   float: right;
-  border-radius: 5px;
-  font-family: Helvetica;
   padding: 3px;
   cursor: pointer;
   font-size: 0.8rem;
+  border: none;
+  background-color: white;
+  color: $color-groupo;
 }
 
 @mixin button-comment {
   cursor: pointer;
   border: none;
   background-color: white;
- 
-  
+  color:grey;
+}
+
+@mixin button-post{
+  border-radius: 10px;
+color: $color-groupo;
+font-family:Helvetica;
+font-weight: bold;
+cursor: pointer;
 }

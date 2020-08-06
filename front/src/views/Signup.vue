@@ -1,6 +1,6 @@
 <template>
   <div class="signup">
-    <img alt="Vue logo" src="../../img/icon-above-font-small.png" />
+    <img class="photo" alt="Vue logo" src="../../img/icon-above-font-small.png" />
     <SignupForm msg="Welcome to groupo" />
   </div>
 </template>
@@ -16,3 +16,12 @@ export default {
   },
 };
 </script>
+<style  lang="scss">
+  @media screen and (max-width: 800px){
+    .photo{
+      width: 90%;
+    }
+  }
+
+</style>
+

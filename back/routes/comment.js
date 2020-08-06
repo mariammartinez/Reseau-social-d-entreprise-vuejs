@@ -2,9 +2,6 @@ const express = require('express');
 const router = express.Router();
 const commentCtrl = require('../controller/comment');
 
-
-// ici je dois ajouter les middleware et controlers
-
 const auth = require('../middleware/auth');
 
 

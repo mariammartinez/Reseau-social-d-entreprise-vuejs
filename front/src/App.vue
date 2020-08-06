@@ -3,13 +3,13 @@
     <div id="nav">
       <router-link v-if="isConnected" to="/">Home</router-link> |
       <router-link class="signup" v-if="!isConnected" to="/signup">Inscription</router-link> |
-      <router-link  v-if="!isConnected" to="/login">connexion</router-link>
+      <router-link class="login" v-if="!isConnected" to="/login">connexion</router-link>
       <a href="logout" v-if="isConnected" @click.prevent="deconnexion" to="/">déconnexion</a> |
     
     </div>
     <router-view />
 
-    <footer>
+    <footer id="footer">
       <a href="delete"  v-if="isConnected"  @click.prevent="deleteAccount"> Suppression de votre compte </a>
       <a href="utilisation" > Mentions Legales </a>
     </footer>
@@ -55,13 +55,14 @@ export default {
 </script>
 
 <style lang="scss">
+ @import './assets/scss/main.scss';
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    background-color:#c4c4c4;;
+    background-color:#f2f3f4;
   }
   .signup{
     background-color: white;
@@ -84,6 +85,11 @@ export default {
     #app{
       width: auto;
     }
+
+  }
+
+  #footer{
+    @include footer;
   }
 
 

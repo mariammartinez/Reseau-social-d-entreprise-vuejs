@@ -20,11 +20,20 @@ function converDateToStr(d){
     return day+'/'+month+ '/'+year+' '+hour+':'+minutes;
 }
 
-exports.createPost = (req,res,next) => {
+exports.createPost = (req,res,next) => { 
   
     const post = new req.model.Post({
-      ...req.body
+       
+      ...req.body,
+     
+
     });
+
+    if(typeof req.file != "undefined"){
+        post.image= `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    }
+
+
     post.setUser(req.userId)
     post.save()
     .then(() => { 
@@ -35,7 +44,7 @@ exports.createPost = (req,res,next) => {
                 date : converDateToStr(post.date),
                 title : post.title,
                 text: post.text,
-                img: post.img,
+                img: post.image,
                 userName: req.user.name + ' ' +  req.user.lastName,
                 userId: req.userId
             }
@@ -59,7 +68,7 @@ exports.modifyPost = (req, res, next) =>{
 
 exports.deletePost = (req, res, next) =>{
     req.model.Post.findOne({where:{id: req.params.id}})
-        .then((post) => { 
+        .then((post) => { console.log(req.userId); console.log(post.userId);
             if(req.userId == post.userId){
                 req.model.Comment.findAll({where:{postId: req.params.id}})
                 .then((comments) => {
@@ -94,7 +103,7 @@ exports.getAllPost = (req, res, next) => {
                 date : converDateToStr(post.date),
                 title : post.title,
                 text: post.text,
-                img: post.img,
+                img: post.image,
                 userName: post.User.name + ' ' +  post.User.lastName,
                 userId: post.userId
             } 

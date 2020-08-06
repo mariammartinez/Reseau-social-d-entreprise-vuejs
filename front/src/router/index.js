@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Signup from '../views/Signup.vue'
 import Login from '../views/Login.vue'
-import Delete from '../views/Delete.vue'
+
 
 
 Vue.use(VueRouter)
@@ -34,14 +34,7 @@ Vue.use(VueRouter)
       guest: true
     }
   },
-  {
-    path: '/delete',
-    name: 'delete',
-    component: Delete,
-    meta: {
-      requiresAuth: true
-    }
-  },
+
  
 ]
 

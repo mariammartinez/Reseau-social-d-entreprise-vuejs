@@ -1,12 +1,12 @@
 <template>
   <div>
       <div id="postComment">
-      <button @click="commentStart" v-show="!displayForm" id="commentPost">Commenter</button>
+      <button @click="commentStart" v-show="!displayForm" id="commentButton">Commenter</button>
       <textarea v-show="displayForm" v-model="comment"  onclick="this.value =''"> </textarea>
       <button @click.prevent="click" v-show="displayForm" id="send">Envoyer</button>
     </div>
     <div id="commentList">
-      <button @click="commentShow" v-show="!displayComment" id="comment">Commentaires {{ this.comments.length }}</button>  
+      <button @click="commentShow" v-show="!displayComment" id="comments">Commentaires {{ this.comments.length }}</button>  
       <div v-for="comment in comments" :key="comment.id" v-show="displayComment" class="oneComment">
         <div class="userId">{{ comment.userName }}</div>
         <div class="date">{{ comment.date }}</div>
@@ -93,6 +93,7 @@ export default {
           ) {
           this.comments.unshift(res.data.comment)
           this.commentShow();
+          this.comment =  "";
  
           } else {
             alert("error");
@@ -118,22 +119,18 @@ export default {
 
   #commentList {
     display: flex;
-
     flex-direction: column;
     align-items: center;
   }
 
   .oneComment {
-    margin: 10px;
-    justify-content : space-around;
-    width:50%;
-    border-radius: 10px;
-    //background-color: cornsilk;
-    padding: 10px;
+    @include one-comment;
+
   }
   .userId {
     text-align: start;
     font-size: 1rem; }
+  
   .text {
     font-size: 1rem;
     font-weight: italic;
@@ -148,36 +145,15 @@ export default {
     @include  button-supp;
   }
 
-  #comment{
-    @include button-comment;
+  #comments{
+    @include button-comments;
   }
 
-   #commentPost{   
-    border: none;
-    background-color: white;
-    font-family: Helvetica;
-    padding: 3px;
-    color: #7575a3;
-    cursor: pointer;
-    font-weight: bold;
+   #commentButton{   
+    @include comment-button;
   }
-
-  #commentPost:hover{
-        color: #fd2d01;
-        font-weight: bold;
-      }
-
   #send{
-    border: none;
-    background-color: white;
-    font-family: Helvetica;
-    padding: 3px;
-    color: #7575a3;
-    cursor: pointer;
+    @include button-connect;
   }
-  #send:hover{
-        color: black;
-        font-weight: bold;
-      }
-
+  
 </style>

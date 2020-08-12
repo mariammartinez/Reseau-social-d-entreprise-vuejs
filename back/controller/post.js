@@ -1,39 +1,12 @@
-//convertir un objet DATE en string (dd/mm/yyyy hh/mm) 
-function converDateToStr(d){
-    let day = d.getDate();
-    let month = d.getMonth()+1;
-    let year = d.getFullYear();
-    let hour = d.getHours();
-    let minutes = d.getMinutes();
-    if(minutes < 10 ){
-        minutes = '0' + minutes        
-    }
-    if(hour < 10 ){
-        hour = '0' + hour        
-    }
-    if(month < 10 ){
-        month = '0' + month        
-    }   
-    if(day < 10 ){
-        day = '0' + day        
-    }
-    return day+'/'+month+ '/'+year+' '+hour+':'+minutes;
-}
+const Utils = require('../helpers/utils')();
 
 exports.createPost = (req,res,next) => { 
-  
-    const post = new req.model.Post({
-       
+    const post = new req.model.Post({   
       ...req.body,
-     
-
     });
-
     if(typeof req.file != "undefined"){
         post.image= `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     }
-
-
     post.setUser(req.userId)
     post.save()
     .then(() => { 
@@ -41,7 +14,7 @@ exports.createPost = (req,res,next) => {
             message: 'Post enregistré !',
             post: {
                 id: post.id,
-                date : converDateToStr(post.date),
+                date : Utils.converDateToStr(post.date),
                 title : post.title,
                 text: post.text,
                 img: post.image,
@@ -57,19 +30,21 @@ exports.createPost = (req,res,next) => {
 };
 //a enlever
 exports.modifyPost = (req, res, next) =>{
-    req.model.Post.findOne({_id: req.params.id})
-    .then((post) => {
-        post.title = req.body.title
+ 
+    req.model.Post.findOne({where:{id: req.params.id}})
+    .then((post) => { console.log(post)
+        post.title = req.body.postTitle;
+        post.text = req.body.postText;
         post.save()
         .then(() => res.status(200).json({ message: 'Post modifié !'}))
         .catch(error => res.status(400).json({ error }));
-    })
+    }) 
 };
 
 exports.deletePost = (req, res, next) =>{
     req.model.Post.findOne({where:{id: req.params.id}})
-        .then((post) => { console.log(req.userId); console.log(post.userId);
-            if(req.userId == post.userId){
+        .then((post) => {     
+            if(req.userId == post.userId || req.user.isAdmin == "1"){
                 req.model.Comment.findAll({where:{postId: req.params.id}})
                 .then((comments) => {
                     for ( let comment of comments){
@@ -97,7 +72,7 @@ exports.getAllPost = (req, res, next) => {
         let allPosts = []
 
         for(let post of data){
-            
+            console.log(post.isAdmin); 
             let returnPost ={
                 id: post.id,
                 date : converDateToStr(post.date),
@@ -105,7 +80,8 @@ exports.getAllPost = (req, res, next) => {
                 text: post.text,
                 img: post.image,
                 userName: post.User.name + ' ' +  post.User.lastName,
-                userId: post.userId
+                userId: post.userId,
+                isAdmin: post.isAdmin,  
             } 
           allPosts.push(returnPost);
         }

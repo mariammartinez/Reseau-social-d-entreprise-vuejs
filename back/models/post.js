@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
           date:{type: DataTypes.DATE, 
           defaultValue: Sequelize.NOW},
           image: {type: DataTypes.STRING},
+          isAdmin:{type: DataTypes.NUMBER},
     }, 
       {
         timestamps: false,

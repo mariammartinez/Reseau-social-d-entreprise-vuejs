@@ -1,16 +1,16 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link v-if="isConnected" to="/">Home</router-link> |
-      <router-link class="signup" v-if="!isConnected" to="/signup">Inscription</router-link> |
+      <router-link v-if="isConnected" to="/">Home | </router-link> 
+      <router-link class="signup" v-if="!isConnected" to="/signup">Inscription | </router-link> 
       <router-link class="login" v-if="!isConnected" to="/login">connexion</router-link>
-      <a href="logout" v-if="isConnected" @click.prevent="deconnexion" to="/">déconnexion</a> |
+      <a href="logout" v-if="isConnected" @click.prevent="deconnexion" to="/">déconnexion | </a> 
     
     </div>
     <router-view />
 
     <footer id="footer">
-      <a href="delete"  v-if="isConnected"  @click.prevent="deleteAccount"> Suppression de votre compte </a>
+      <a href="delete"  v-if="isConnected"  @click.prevent="deleteAccount" class="delete"> Suppression de votre compte </a>
       <a href="utilisation" > Mentions Legales </a>
     </footer>
   </div>
@@ -63,6 +63,12 @@ export default {
     text-align: center;
     color: #2c3e50;
     background-color:#f2f3f4;
+
+     @media screen and (max-width: 800px){
+  
+    width: 100%;
+    
+  }
   }
   .signup{
     background-color: white;
@@ -81,15 +87,18 @@ export default {
       }
     }
   }
-  @media screen and (max-width: 800px){
-    #app{
-      width: auto;
-    }
-
-  }
 
   #footer{
     @include footer;
+  }
+  a{
+    text-decoration: none;
+     color: $color-groupo;
+  }
+  .delete:hover{
+    color: black;
+
+    
   }
 
 

@@ -11,7 +11,8 @@ exports.signup = (req, res, next) =>{
          name: req.body.name,
          lastName: req.body.lastName,
          email: req.body.email,
-         password: hash
+         password: hash,
+         isAdmin: req.body.isAdmin
      })
 
     user.save()
@@ -36,13 +37,14 @@ exports.login = (req, res, next) =>{
                 if (!valid){
                     return res.status(401).json({ error:'mot de passe non trouvé' })
                 }
-                res.status(200).json({
-                    userId:user.id,
+                res.status(200).json({ 
+                    userId: user.id,
                     token: jwt.sign(
                         { userId: user.id },
                         'RANDOM_TOKEN_SECRET',
                         { expiresIn: '24h' }
-                    )
+                    ),
+                    isAdmin: user.isAdmin
                 });
             })
             .catch(error => res.status(500).json({error}));

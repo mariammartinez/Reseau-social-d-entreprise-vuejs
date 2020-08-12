@@ -4,7 +4,7 @@
       <div class="form-post">
         <h1> Exprimez-vous </h1>
         <label for="title"></label>
-        <input v-model="postTitle" type="text" name="title" id="title" maxlength="20" placeholder="TITRE"/>
+        <input v-model="postTitle" type="text" name="title" id="title" maxlength="30" placeholder="TITRE"/>
       </div> 
       <div class="form-post">
         <label for="text"></label>
@@ -20,13 +20,28 @@
     </form>
     <div id="postList">
       <div v-for="post in posts" :key="post.id" class="onePost">
-        <button @click.prevent="supp(post.id)" v-if="isAuthor(post)" class="delete" type="button"><i class="fas fa-trash-alt"></i></button>
+        <button @click.prevent="supp(post.id)" v-if="isAuthorOrAdmin(post)" class="delete" type="button"><i class="fas fa-trash-alt"></i></button>
+        <button class="modify" type="button"  @click="updateStart(post)" v-show="!post.displayForm" v-if="isAuthorOrAdmin(post)"><i class="fas fa-pencil-alt"></i></button>
+          <form @submit.prevent="updatePost(post)"  action="/post" method="put" class="update" v-if="isAuthorOrAdmin(post)"  v-show="post.displayForm">
+            <div class="form-update">
+              <label for="title"></label>
+              <input v-model="post.title" type="text" name="title" id="title" maxlength="30" />
+            </div> 
+            <div class="form-update">
+              <label for="text"></label>
+              <textarea v-model="post.text" type="text" name="exprime-toi" id="text"  required></textarea>
+            </div>
+            <div class="form-update">
+              <input type="submit" value="modifier!"  class="post-button" />
+            </div>
+          </form>
         <div class="userId">{{ post.userName }}</div>
         <div class="date">{{ post.date }}</div>
-        <div class="title">{{ post.title }}</div>
-        <div class="text">{{ post.text }}</div>
-        <figure v-if= "onlyText(post.img)"> <img :src="post.img" alt="image" title="image" id="image"> </figure>
-       
+        <div v-show= "!post.displayForm">
+          <div class="title">{{ post.title }}</div>
+          <div class="text">{{ post.text }}</div>
+          <figure v-if= "onlyText(post.img)"> <img :src="post.img" alt="image" title="image" id="image"> </figure>
+        </div>
         <CommentList :postId="post.id" :postUserId="post.userId" />
       </div>
     </div>
@@ -48,7 +63,6 @@ export default {
       posts: [],
       file: null,
       postImg: null,
-
     };
   },
   props: {},
@@ -56,8 +70,7 @@ export default {
     this.refresh();
   },
   methods:  {
-
-    submit: function() {console.log(this.file);
+    submit: function() {
       const fd = new FormData()
     fd.append('image', this.file)
     fd.append('title', this.postTitle)
@@ -69,7 +82,10 @@ export default {
           typeof res.data.message !== "undefined" &&
           res.data.message === "Post enregistré !"
         ) { 
-          this.posts.unshift(res.data.post)
+          this.posts.unshift(res.data.post);
+          this.postTitle = "";
+          this.postText = "";
+      
         }
 
          else {
@@ -80,49 +96,80 @@ export default {
         console.log(err);
       });
     },
-    isAuthor: function(post) {
-      return post.userId == sessionStorage.getItem("userId");
+    isAuthorOrAdmin: function(post) {
+      return post.userId == sessionStorage.getItem("userId")  
+      || 1 == sessionStorage.getItem("isAdmin");
     },
+
+   
     refresh: function() {
       this.axios
         .get("http://localhost:3000/post/all")
         .then((res) => {
+          for(let post of res.data.posts){
+            post.displayForm = false;
+          }
           this.posts = res.data.posts;
         })
         .catch((err) => {
           console.log(err);
         });
     },
+     updatePost: function(post){ console.log(post);
+       this.axios
+       .put("http://localhost:3000/post/" + post.id, {
+         postText : post.text,
+         postTitle : post.title
+       })
+       .then((res) =>{
+         if(
+            typeof res.data.message !== "undefined" &&
+            res.data.message === "Post modifié !"
+         ){
+           post.displayForm = false;
+         }
+
+       })
+         .catch((err) => {
+          console.log(err);
+        }); 
+      
+    },
 
     supp: function(postId) {
-      this.axios
-        .delete("http://localhost:3000/post/" + postId)
-        .then((res) => { 
-          if (
-            typeof res.data.message !== "undefined" &&
-            res.data.message === "Post supprimé !"
-          ) {
-            let n = 0;
+      if(window.confirm("voulez-vous supprimer le post?"))
+        this.axios
+          .delete("http://localhost:3000/post/" + postId)
+          .then((res) => { 
+            if (
+              typeof res.data.message !== "undefined" &&
+              res.data.message === "Post supprimé !"
+            ) {
+              let n = 0;
 
-          for(let post of this.posts){
-            if (postId == post.id)
-            this.posts.splice(n, 1);
-         } 
-          } else {
-              alert("error");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+            for(let post of this.posts){
+              if (postId == post.id)
+              this.posts.splice(n, 1);
+          } 
+            } else {
+                alert("error");
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     },
     imageFile(event){
       this.file =event.target.files[0];
     },
     onlyText(postImg){
-      console.log(postImg);
       return postImg != "null";
-    }
+    },
+    updateStart: function(post) {
+      post.displayForm = true;
+      
+    },
+
   },
 };
 </script>
@@ -131,19 +178,14 @@ export default {
 <style scoped lang="scss">
  @import '../assets/scss/main.scss';
   #postList {
-    display: block;
-    margin: auto;
-    width: 70%;
+    @include post-list;
+    @include media-phone;
   }
 
   .onePost {
-    box-shadow: -4px -1px 5px 0px rgba(209, 202, 209, 1);
-    margin-top: 30px;
-    background-color: white;
-    padding: 10px;
-   
-  
+    @include  one-post;
   }
+
   .title {
     font-size: 1.5rem;
     font-weight: bold;
@@ -173,22 +215,13 @@ export default {
    @include button-post;
   }
 
-   @media screen and (max-width: 800px){
-
-    #postList{
-      width: 90%;
-    }
+  #image{
+    @include media-phone;
+    width: 40%;
+  
   }
-
   .form{
-    padding: 10px;
-    background-color: white;
-    width: 50%;
-    display: block;
-    margin: auto;
-    box-shadow: 0px 10px 13px -7px #000000;
-    border-radius: 5px;
-    height: 250px;
+    @include form-post;
   }
 
   #text{
@@ -202,13 +235,12 @@ export default {
   }
 
   #img{
-    float: left;
+  
     @include  button-connect;
   }
-
-  #image{
-    width: 30%;
+  .modify{
+    @include button-supp;
+  
   }
-
 
 </style>

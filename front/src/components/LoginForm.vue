@@ -42,6 +42,7 @@ export default {
           } else {
             sessionStorage.setItem("jwt", res.data.token);
             sessionStorage.setItem("userId", res.data.userId);
+            sessionStorage.setItem("isAdmin", res.data.isAdmin);
             window.location.href = "/";
           }
         })

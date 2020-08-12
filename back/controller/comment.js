@@ -1,45 +1,4 @@
-//convertir un objet DATE en string (dd/mm/yyyy hh/mm) 
-function converDateToStr(d){
-    let day = d.getDate();
-    let month = d.getMonth()+1;
-    let year = d.getFullYear();
-    let hour = d.getHours();
-    let minutes = d.getMinutes();
-    if(minutes < 10 ){
-        minutes = '0' + minutes        
-    }
-    if(hour < 10 ){
-        hour = '0' + hour        
-    }
-    if(month < 10 ){
-        month = '0' + month        
-    }   
-    if(day < 10 ){
-        day = '0' + day        
-    }
-    return day+'/'+month+ '/'+year+' '+hour+':'+minutes;
-}
-//convertir un objet DATE en string (dd/mm/yyyy hh/mm) 
-function converDateToStr(d){
-    let day = d.getDate();
-    let month = d.getMonth()+1;
-    let year = d.getFullYear();
-    let hour = d.getHours();
-    let minutes = d.getMinutes();
-    if(minutes < 10 ){
-        minutes = '0' + minutes        
-    }
-    if(hour < 10 ){
-        hour = '0' + hour        
-    }
-    if(month < 10 ){
-        month = '0' + month        
-    }   
-    if(day < 10 ){
-        day = '0' + day        
-    }
-    return day+'/'+month+ '/'+year+' '+hour+':'+minutes;
-}
+const Utils = require('../helpers/utils')();
 
 exports.createComment = (req,res,next) => {
  
@@ -53,7 +12,7 @@ exports.createComment = (req,res,next) => {
                 message: 'commentaire enregistré!',
                 comment: {
                     id: comment.id,
-                    date : converDateToStr(comment.date),
+                    date : Utils.converDateToStr(comment.date),
                     text: comment.text,
                     userName: req.user.name + ' ' +  req.user.lastName,
                     userId: req.userId

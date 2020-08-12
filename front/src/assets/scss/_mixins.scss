@@ -1,11 +1,17 @@
 $color-groupo: #fd2d01;
 
 @mixin button-connect{
-    border-radius: 10px;
+  border-radius: 10px;
   color: $color-groupo;
   font-family:Helvetica;
   font-weight: bold;
   cursor: pointer;
+  margin: 10px;
+ 
+    &:hover{
+      color: black;
+      font-weight: bold;
+    }
 }
 
 @mixin button-supp {
@@ -16,9 +22,14 @@ $color-groupo: #fd2d01;
   border: none;
   background-color: white;
   color: $color-groupo;
+  
+    &:hover{
+      color: black;
+      font-weight: bold;
+    }
 }
 
-@mixin button-comment {
+@mixin button-comments {
   cursor: pointer;
   border: none;
   background-color: white;
@@ -31,4 +42,64 @@ color: $color-groupo;
 font-family:Helvetica;
 font-weight: bold;
 cursor: pointer;
+}
+
+@mixin form-post {
+  padding: 10px;
+  background-color: white;
+  width: 50%;
+  display: block;
+  margin: auto;
+  box-shadow: 0px 10px 13px -7px #000000;
+  border-radius: 5px;
+  height: 250px;
+  @include media-phone;
+  
+}
+
+@mixin media-phone{
+  @media screen and (max-width: 800px){
+  
+    width: 90%;
+    
+  }
+}
+
+@mixin one-post{
+  box-shadow: -4px -1px 5px 0px rgba(209, 202, 209, 1);
+  margin-top: 30px;
+  background-color: white;
+  padding: 10px;
+}
+
+@mixin post-list{
+  display: block;
+  margin: auto;
+  width: 70%;
+  
+}
+
+@mixin one-comment{
+  margin: 10px;
+  justify-content : space-around;
+  width:50%;
+  border-radius: 10px;
+  //background-color: cornsilk;
+  padding: 10px;
+}
+
+
+@mixin comment-button{
+  border: none;
+  background-color: white;
+  font-family: Helvetica;
+  padding: 3px;
+  color: #7575a3;
+  cursor: pointer;
+  font-weight: bold;
+
+  &:hover{
+    color: black;
+    font-weight: bold;
+  }
 }

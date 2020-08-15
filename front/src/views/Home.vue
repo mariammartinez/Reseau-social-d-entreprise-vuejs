@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img alt="groupomania logo" class="photo" src="../../img/icon-left-font-monochrome-black-small.png" />
+    <img alt="groupomania logo" class="photo" src="../../img/icon-left-font-small.png" />
  
     <PostList msg="post" />
    
@@ -23,8 +23,15 @@
 <style  lang="scss">
   @media screen and (max-width: 800px){
     .photo{
-      width:90%;
+      width: 90%;
     }
+  }
+
+  @media screen and (min-width : 768px) and (max-width : 1024px){
+    .photo{
+      width: 90%
+    }
+ 
   }
 
 </style>

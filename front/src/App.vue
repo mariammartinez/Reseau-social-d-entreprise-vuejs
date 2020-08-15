@@ -61,8 +61,9 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
+    background-color: white;
     color: #2c3e50;
-    background-color:#f2f3f4;
+    //background-color:#f2f3f4;
 
      @media screen and (max-width: 800px){
   

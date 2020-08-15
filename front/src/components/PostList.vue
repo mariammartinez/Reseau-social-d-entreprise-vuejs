@@ -85,7 +85,6 @@ export default {
           this.posts.unshift(res.data.post);
           this.postTitle = "";
           this.postText = "";
-      
         }
 
          else {
@@ -147,10 +146,13 @@ export default {
             ) {
               let n = 0;
 
+            // find post to be deleted
             for(let post of this.posts){
-              if (postId == post.id)
-              this.posts.splice(n, 1);
-          } 
+              if (postId == post.id){
+                this.posts.splice(n, 1);
+              }
+                n++;
+            } 
             } else {
                 alert("error");
             }
@@ -180,6 +182,7 @@ export default {
   #postList {
     @include post-list;
     @include media-phone;
+    @include media-tablet;
   }
 
   .onePost {
@@ -192,6 +195,7 @@ export default {
   }
   .text{
     font-size: 1.5rem;
+    word-wrap: break-word;
   }
   .date {
     text-align: start;
@@ -217,6 +221,7 @@ export default {
 
   #image{
     @include media-phone;
+    @include media-tablet;
     width: 40%;
   
   }

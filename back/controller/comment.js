@@ -1,4 +1,5 @@
-const Utils = require('../helpers/utils')();
+const Utils = require('../helpers/utils');
+const utils = new Utils();
 
 exports.createComment = (req,res,next) => {
  
@@ -12,7 +13,7 @@ exports.createComment = (req,res,next) => {
                 message: 'commentaire enregistré!',
                 comment: {
                     id: comment.id,
-                    date : Utils.converDateToStr(comment.date),
+                    date : utils.converDateToStr(comment.date),
                     text: comment.text,
                     userName: req.user.name + ' ' +  req.user.lastName,
                     userId: req.userId
@@ -53,7 +54,7 @@ exports.getAllComment = (req, res, next) => {console.log("req.params.postId");
             
             let returnComment ={
                 id: comment.id,
-                date : converDateToStr(comment.date),
+                date : utils.converDateToStr(comment.date),
                 text: comment.text,
                 userName: comment.User.name + ' ' +  comment.User.lastName,
                 userId: comment.userId

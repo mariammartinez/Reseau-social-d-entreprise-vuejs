@@ -1,4 +1,5 @@
-const Utils = require('../helpers/utils')();
+const Utils = require('../helpers/utils');
+const utils = new Utils();
 
 exports.createPost = (req,res,next) => { 
     const post = new req.model.Post({   
@@ -6,7 +7,7 @@ exports.createPost = (req,res,next) => {
     });
     if(typeof req.file != "undefined"){
         post.image= `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    }
+    } 
     post.setUser(req.userId)
     post.save()
     .then(() => { 
@@ -14,7 +15,7 @@ exports.createPost = (req,res,next) => {
             message: 'Post enregistré !',
             post: {
                 id: post.id,
-                date : Utils.converDateToStr(post.date),
+                date : utils.converDateToStr(post.date),
                 title : post.title,
                 text: post.text,
                 img: post.image,
@@ -28,7 +29,7 @@ exports.createPost = (req,res,next) => {
         res.status(400).json({ error })
     });
 };
-//a enlever
+
 exports.modifyPost = (req, res, next) =>{
  
     req.model.Post.findOne({where:{id: req.params.id}})
@@ -62,7 +63,6 @@ exports.deletePost = (req, res, next) =>{
  
 
 exports.getAllPost = (req, res, next) => {
-   
     req.model.Post.findAll({
         order:[
             ['date', 'DESC']
@@ -75,7 +75,7 @@ exports.getAllPost = (req, res, next) => {
             console.log(post.isAdmin); 
             let returnPost ={
                 id: post.id,
-                date : converDateToStr(post.date),
+                date : utils.converDateToStr(post.date),
                 title : post.title,
                 text: post.text,
                 img: post.image,

@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <img class="photo" alt="Vue logo" src="../../img/icon-left-font-monochrome-black-small.png" />
+    <img class="photo" alt="Vue logo" src="../../img/icon-left-font-small.png" />
     <LoginForm msg="Welcome to groupo" />
   </div>
 </template>

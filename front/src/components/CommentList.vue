@@ -62,8 +62,10 @@ export default {
           ) {
             let n = 0;
             for(let comment of this.comments){
-              if (commentId == comment.id)
-              this.comments.splice(n, 1);
+              if (commentId == comment.id){
+                this.comments.splice(n, 1);
+              }
+                n++;
             } 
 
           }else {
@@ -125,15 +127,15 @@ export default {
 
   .oneComment {
     @include one-comment;
-
   }
   .userId {
     text-align: start;
-    font-size: 1rem; }
-  
+    font-size: 1rem;
+    color: $color-groupo;
+  }
   .text {
     font-size: 1rem;
-    font-weight: italic;
+    word-wrap: break-word;
   }
   .date {
     text-align: start;

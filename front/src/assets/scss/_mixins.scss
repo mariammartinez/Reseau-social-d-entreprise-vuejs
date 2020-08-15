@@ -54,15 +54,21 @@ cursor: pointer;
   border-radius: 5px;
   height: 250px;
   @include media-phone;
+  @include media-tablet;
   
 }
 
 @mixin media-phone{
   @media screen and (max-width: 800px){
-  
     width: 90%;
-    
   }
+}
+
+@mixin media-tablet {
+  @media screen and (min-width : 768px) and (max-width : 1024px){
+    width: 90%
+  }
+  
 }
 
 @mixin one-post{

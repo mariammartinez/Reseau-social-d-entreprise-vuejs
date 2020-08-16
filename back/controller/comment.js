@@ -39,7 +39,7 @@ exports.createComment = (req,res,next) => {
         })
 };
 
-exports.getAllComment = (req, res, next) => {console.log("req.params.postId");
+exports.getAllComment = (req, res, next) => {
     req.model.Comment.findAll({ 
         //reparer le where, chercher l'id du post
         where:{postId: req.params.id}, 

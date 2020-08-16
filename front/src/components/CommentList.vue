@@ -44,13 +44,10 @@ export default {
         .then((res) => {
           
           this.comments = res.data.comments;
-        });
-      //.catch((err) => {
-      // console.log(err);
-      //});
-    },
-    debug: function(str) {
-      console.log(str);
+        })
+      .catch((err) => {
+       console.log(err);
+      });
     },
     supp: function(commentId) {
       this.axios

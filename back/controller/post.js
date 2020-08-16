@@ -33,7 +33,7 @@ exports.createPost = (req,res,next) => {
 exports.modifyPost = (req, res, next) =>{
  
     req.model.Post.findOne({where:{id: req.params.id}})
-    .then((post) => { console.log(post)
+    .then((post) => { 
         post.title = req.body.postTitle;
         post.text = req.body.postText;
         post.save()
@@ -72,7 +72,6 @@ exports.getAllPost = (req, res, next) => {
         let allPosts = []
 
         for(let post of data){
-            console.log(post.isAdmin); 
             let returnPost ={
                 id: post.id,
                 date : utils.converDateToStr(post.date),

@@ -114,7 +114,7 @@ export default {
           console.log(err);
         });
     },
-     updatePost: function(post){ console.log(post);
+     updatePost: function(post){ 
        this.axios
        .put("http://localhost:3000/post/" + post.id, {
          postText : post.text,

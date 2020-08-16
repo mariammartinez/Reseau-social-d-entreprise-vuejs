@@ -46,10 +46,11 @@ export default {
           this.comments = res.data.comments;
         })
       .catch((err) => {
-       console.log(err);
+        console.log(err);
       });
     },
     supp: function(commentId) {
+      if(window.confirm("Voulez-vous supprimer le commentaire?"))
       this.axios
         .delete("http://localhost:3000/comment/" + commentId)
         .then((res) => {
@@ -74,10 +75,11 @@ export default {
         });
     },
     commentShow: function() {
-    this.displayComment = true;
+      this.displayComment = true;
     },
     isMyComment: function(comment){ 
-      return comment.userId == sessionStorage.getItem("userId") || this.postUserId == sessionStorage.getItem("userId") ;
+      return comment.userId == sessionStorage.getItem("userId") || this.postUserId == sessionStorage.getItem("userId") 
+      || 1 == sessionStorage.getItem("isAdmin");
     },
     click: function() {
       this.axios
@@ -93,7 +95,6 @@ export default {
           this.comments.unshift(res.data.comment)
           this.commentShow();
           this.comment =  "";
- 
           } else {
             alert("error");
           }

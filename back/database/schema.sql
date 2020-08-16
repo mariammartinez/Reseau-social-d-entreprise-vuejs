@@ -23,7 +23,6 @@ CREATE TABLE `comment` (
 
 
 CREATE TABLE `post` (
-  `isAdmin` tinyint(1) NOT NULL DEFAULT 0,
   `text` text DEFAULT NULL,
   `date` datetime NOT NULL,
   `title` varchar(100) NOT NULL,
@@ -48,4 +47,4 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- 2020-08-16 09:32:33
+-- 2020-08-16 11:09:48

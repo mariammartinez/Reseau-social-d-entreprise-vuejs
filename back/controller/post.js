@@ -34,11 +34,15 @@ exports.modifyPost = (req, res, next) =>{
  
     req.model.Post.findOne({where:{id: req.params.id}})
     .then((post) => { 
-        post.title = req.body.postTitle;
-        post.text = req.body.postText;
-        post.save()
-        .then(() => res.status(200).json({ message: 'Post modifié !'}))
-        .catch(error => res.status(400).json({ error }));
+        if(req.userId == post.userId || req.user.isAdmin == "1"){
+            post.title = req.body.postTitle;
+            post.text = req.body.postText;
+            post.save()
+            .then(() => res.status(200).json({ message: 'Post modifié !'}))
+            .catch(error => res.status(400).json({ error }));
+        }else{
+            res.status(400).json({ message: 'error' })
+        }
     }) 
 };
 
@@ -79,8 +83,7 @@ exports.getAllPost = (req, res, next) => {
                 text: post.text,
                 img: post.image,
                 userName: post.User.name + ' ' +  post.User.lastName,
-                userId: post.userId,
-                isAdmin: post.isAdmin,  
+                userId: post.userId, 
             } 
           allPosts.push(returnPost);
         }

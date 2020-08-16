@@ -137,7 +137,7 @@ export default {
     },
 
     supp: function(postId) {
-      if(window.confirm("voulez-vous supprimer le post?"))
+      if(window.confirm("Voulez-vous supprimer le post?"))
         this.axios
           .delete("http://localhost:3000/post/" + postId)
           .then((res) => { 

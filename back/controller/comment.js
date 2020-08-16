@@ -29,7 +29,7 @@ exports.createComment = (req,res,next) => {
         include: req.model.Post
     })
         .then((comment) => {
-            if(comment.userId == req.userId || comment.Post.userId == req.userId){ 
+            if(comment.userId == req.userId || comment.Post.userId == req.userId || req.user.isAdmin == "1" ){ 
                 comment.destroy()
                 .then(() => res.status(200).json({ message: ' ok '}))
                 .catch(error => res.status(400).json({ error }));

@@ -8,7 +8,7 @@
       </div> 
       <div class="form-post">
         <label for="text"></label>
-        <textarea v-model="postText" type="text" name="exprime-toi" id="text" placeholder="votre texte ici" required></textarea>
+        <textarea v-model="postText" name="text" id="text" placeholder="Votre texte ici" required></textarea>
       </div>
       <div class="form-post">
           <label for="img"></label>
@@ -22,14 +22,14 @@
       <div v-for="post in posts" :key="post.id" class="onePost">
         <button @click.prevent="supp(post.id)" v-if="isAuthorOrAdmin(post)" class="delete" type="button"><i class="fas fa-trash-alt"></i></button>
         <button class="modify" type="button"  @click="updateStart(post)" v-show="!post.displayForm" v-if="isAuthorOrAdmin(post)"><i class="fas fa-pencil-alt"></i></button>
-          <form @submit.prevent="updatePost(post)"  action="/post" method="put" class="update" v-if="isAuthorOrAdmin(post)"  v-show="post.displayForm">
+          <form @submit.prevent="updatePost(post)"  action="/post" method="post" class="update" v-if="isAuthorOrAdmin(post)"  v-show="post.displayForm">
             <div class="form-update">
-              <label for="title"></label>
-              <input v-model="post.title" type="text" name="title" id="title" maxlength="30" />
+              <label for="titleList"></label>
+              <input v-model="post.title" type="text" name="titleList" id="titleList" maxlength="30" />
             </div> 
             <div class="form-update">
-              <label for="text"></label>
-              <textarea v-model="post.text" type="text" name="exprime-toi" id="text"  required></textarea>
+              <label for="textList"></label>
+              <textarea v-model="post.text" name="textList" id="textList"  required></textarea>
             </div>
             <div class="form-update">
               <input type="submit" value="modifier!"  class="post-button" />
@@ -82,13 +82,14 @@ export default {
           typeof res.data.message !== "undefined" &&
           res.data.message === "Post enregistré !"
         ) { 
+          res.data.post.displayForm = false;
           this.posts.unshift(res.data.post);
           this.postTitle = "";
           this.postText = "";
         }
 
          else {
-          alert("error");
+          alert("Error");
         }
       })
       .catch((err) => {
@@ -154,7 +155,7 @@ export default {
                 n++;
             } 
             } else {
-                alert("error");
+                alert("Error");
             }
           })
           .catch((err) => {

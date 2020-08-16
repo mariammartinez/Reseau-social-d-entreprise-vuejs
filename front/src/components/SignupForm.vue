@@ -49,11 +49,11 @@ export default {
             typeof res.data.message !== "undefined" &&
             res.data.message === "Utilisateur crée!"
           ) {
-            alert("user crée");
+            alert("Votre compte a bien été crée, veuillez vous connecter");
             window.location.href = "http://localhost:8080/#/";
             // on est content
           } else {
-            alert("error");
+            alert("Error");
           }
         })
         .catch((err) => {

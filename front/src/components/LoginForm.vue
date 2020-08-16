@@ -10,8 +10,10 @@
       <label for="password"></label>
       <input v-model="password" type="password" name="password" id="password" minlength="8" placeholder="Mot de passe" required/>
     </div>
+    <span class="isError" v-show="isError"> mot de passe incorrect </span>
     <div class="form">
       <input type="submit" value="Connexion" class="button" />
+      
     </div>
   </form>
 </template>
@@ -23,6 +25,7 @@ export default {
     return {
       email: "",
       password: "",
+      isError: false,
     };
   },
   props: {},
@@ -38,17 +41,18 @@ export default {
             typeof res.data.message !== "undefined" &&
             res.data.message === "utilisateur non trouvé!"
           ) {
-            // pas bon
+              this.isError= true;
           } else {
             sessionStorage.setItem("jwt", res.data.token);
             sessionStorage.setItem("userId", res.data.userId);
             sessionStorage.setItem("isAdmin", res.data.isAdmin);
+            this.isError= false;
             window.location.href = "/";
           }
         })
         .catch((err) => {
           console.log(err);
-          alert("no");
+          this.isError= true;
         });
     },
   },
@@ -65,6 +69,11 @@ export default {
   .button {
     @include button-connect;
 
+  }
+
+  .isError{
+    background-color: red;
+    color: white;
   }
     
 

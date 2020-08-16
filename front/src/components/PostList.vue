@@ -86,6 +86,8 @@ export default {
           this.posts.unshift(res.data.post);
           this.postTitle = "";
           this.postText = "";
+          this.file = null;
+          document.getElementById("img").value = "";
         }
 
          else {

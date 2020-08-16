@@ -22,3 +22,5 @@ pnpm-debug.log*
 *.sw?
 
 back/models/config.json
+
+back/images

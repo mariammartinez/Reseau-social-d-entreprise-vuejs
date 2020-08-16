@@ -97,7 +97,7 @@ export default {
           this.comment =  "";
           } else {
             alert("error");
-          }
+          } 
         })
         .catch((err) => {
           console.log(err);

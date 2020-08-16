@@ -1,4 +1,4 @@
-# projet7
+# Projet 7
 
 ## Instalation
 

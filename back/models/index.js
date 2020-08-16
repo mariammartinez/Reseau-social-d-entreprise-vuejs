@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
-const db =  new Sequelize('mysql://mariam:mariamtest@localhost:3306/groupomania' );
+const config =  require('./config.json');
+
+const db =  new Sequelize('mysql://'+config.user+':'+config.password+'@localhost:3306/groupomania' );
 
 // add entities here
 const Model = {

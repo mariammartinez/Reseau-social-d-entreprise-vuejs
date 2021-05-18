@@ -1,4 +1,4 @@
-# projet7
+# Projet 7
 # Créer un réseau social d'entreprise.
 
 Le Projet 7 consiste à développer le MVP d'un réseau social d'entreprise inspiré de 9gag.

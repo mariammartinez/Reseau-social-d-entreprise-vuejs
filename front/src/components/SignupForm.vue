@@ -50,7 +50,7 @@ export default {
             res.data.message === "Utilisateur crée!"
           ) {
             alert("Votre compte a bien été créé, veuillez vous connecter");
-            window.location.href = "http://localhost:8080/#/";
+            window.location.href = "http://localhost:8081/";
             // on est content
           } else {
             alert("Error");

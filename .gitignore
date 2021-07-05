@@ -23,4 +23,5 @@ pnpm-debug.log*
 
 back/models/config.json
 
-back/images
+back/images/*
+!back/images/.gitkeep

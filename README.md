@@ -10,7 +10,7 @@ Les contraintes techniques sont d'utiliser une base de données MySQL, un front 
 
 ### Back
 
-Executer schema.sql qui se trouve dans database
+Executer les commandes SQL schema.sql qui se trouve dans database
 
 Creer config.json dans models avec les clés suivantes:
 ````
